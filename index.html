@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Animate the UI like a Pro</title>
+  <meta name="description" content="Landing page with purposeful GSAP animations: navbar slide-in, button pulse, and scroll-triggered fade-ins." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f17; --card:#111827; --muted:#9ca3af; --fg:#e5e7eb; --accent:#60a5fa;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+      color:var(--fg); background:radial-gradient(1200px 800px at 80% -10%, #1f2937 0%, #0b0f17 50%, #0b0f17 100%);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1100px; margin:0 auto; padding:0 20px}
+    /* NAV */
+    nav{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:rgba(11,15,23,.6); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-wrap{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; gap:.6rem; align-items:center; font-weight:800; letter-spacing:.2px}
+    .brand .logo{width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg, var(--accent), #a78bfa)}
+    .menu{display:flex; gap:1.2rem}
+    .menu a{color:var(--muted)}
+    .cta{display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1rem; background:linear-gradient(135deg, var(--accent), #34d399);
+      color:#0b0f17; font-weight:700; border-radius:12px; box-shadow:0 10px 20px rgba(96,165,250,.25); transform:translateZ(0)}
+    .cta:hover{filter:brightness(1.05)}
+
+    /* HERO */
+    .hero{display:grid; grid-template-columns:1.3fr 1fr; gap:2rem; align-items:center; min-height:76vh; padding:64px 0}
+    .kicker{color:#93c5fd; font-weight:700; letter-spacing:.12em; text-transform:uppercase; font-size:.8rem}
+    h1{font-size:clamp(2rem,4vw,3.5rem); line-height:1.08; margin:.6rem 0 1rem}
+    p.lead{color:var(--muted); font-size:1.1rem}
+    .hero-cards{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
+    .card{background:rgba(17,24,39,.75); border:1px solid rgba(255,255,255,.06); padding:18px; border-radius:16px}
+    .card h3{margin:.2rem 0 .4rem; font-size:1rem}
+    .card p{margin:0; color:var(--muted); font-size:.95rem}
+
+    /* FEATURES */
+    .section{padding:80px 0}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+    .feature{background:rgba(17,24,39,.7); border:1px solid rgba(255,255,255,.06); padding:22px; border-radius:16px}
+    .feature h4{margin:.3rem 0 .4rem}
+    .muted{color:var(--muted)}
+
+    /* FOOTER */
+    footer{padding:50px 0; color:var(--muted); border-top:1px solid rgba(255,255,255,.06)}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr; padding:48px 0}
+      .grid{grid-template-columns:1fr}
+      .hero-cards{grid-template-columns:1fr}
+      .menu{display:none}
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important; transition:none!important}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-wrap">
+      <div class="brand"><div class="logo"></div> AnimatePro</div>
+      <div class="menu">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#cta">Get started</a>
+      </div>
+      <a class="cta" id="nav-cta" href="#cta">Launch demo</a>
+    </div>
+  </nav>
+
+  <header class="container hero">
+    <div>
+      <div class="kicker">Animation that serves UX</div>
+      <h1>Animate the UI like a pro without turning your site into a carnival.</h1>
+      <p class="lead">GSAP-powered motion with intent: subtle navbar slide-in, gentle button pulse to draw focus, and scroll-triggered reveals that respect performance.</p>
+      <div style="margin-top:1.2rem; display:flex; gap:12px; align-items:center">
+        <a class="cta" href="#cta" id="hero-cta">Get Started</a>
+        <a href="#features" class="muted">See features ↓</a>
+      </div>
+    </div>
+    <div class="hero-cards">
+      <div class="card">
+        <h3>Navbar slide-in</h3>
+        <p>Appears on load with springy ease to set context without shouting.</p>
+      </div>
+      <div class="card">
+        <h3>Button pulse</h3>
+        <p>Low-amplitude yoyo pulse, 1.5s cycle. Enough to hint, not nag.</p>
+      </div>
+      <div class="card">
+        <h3>Scroll-trigger fades</h3>
+        <p>Staggered, 120px translate + opacity. Bound to viewport entry.</p>
+      </div>
+      <div class="card">
+        <h3>Reduced motion</h3>
+        <p>Respects user preference automatically. Accessibility first.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="features">
+    <div class="container">
+      <h2 style="margin:0 0 .6rem">Purposeful micro‑interactions</h2>
+      <p class="muted" style="margin:0 0 1.2rem">No fireworks. Just focus cues that make the UI feel alive and usable.</p>
+      <div class="grid reveal">
+        <div class="feature">
+          <h4>GSAP + ScrollTrigger</h4>
+          <p class="muted">Battle-tested animation engine with buttery timelines and scroll control.</p>
+        </div>
+        <div class="feature">
+          <h4>One-file deploy</h4>
+          <p class="muted">Drop this as index.html and you’re done. Perfect for GitHub Pages.</p>
+        </div>
+        <div class="feature">
+          <h4>Perf friendly</h4>
+          <p class="muted">GPU-friendly transforms, avoids layout thrash, and minimal JS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="container">
+      <h2 style="margin:0 0 .6rem">How it works</h2>
+      <p class="muted" style="margin:0 0 1.2rem">Animations are declared once and kept subtle. Adjust durations and eases to taste.</p>
+      <div class="grid reveal">
+        <div class="feature"><h4>Navbar</h4><p class="muted">Slides from -40px, fades in, 0.8s, backOut ease.</p></div>
+        <div class="feature"><h4>Primary CTA</h4><p class="muted">Infinite pulse on scale 0.98↔1, 1.5s yoyo.</p></div>
+        <div class="feature"><h4>Reveal blocks</h4><p class="muted">Stagger children as they scroll into view with once:true.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cta">
+    <div class="container">
+      <div class="feature reveal" style="display:flex; align-items:center; justify-content:space-between; gap:16px">
+        <div>
+          <h3 style="margin:.2rem 0 .5rem">Ship your motion in minutes</h3>
+          <p class="muted" style="margin:0">Copy this file as <code>index.html</code>, push to GitHub, enable Pages. Done.</p>
+        </div>
+        <a class="cta" href="#">Download</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> AnimatePro. Built with GSAP.</div>
+  </footer>
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Respect reduced motion explicitly as a guard
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function attachHoverPulseToButtons(){
+      const btns = document.querySelectorAll('a.cta, button, .btn');
+      const playing = new WeakMap();
+      btns.forEach((el)=>{
+        el.addEventListener('mouseenter', ()=>{
+          if(prefersReduced) return;
+          // build a small yoyo pulse timeline per element
+          const tl = gsap.timeline({ repeat: -1, yoyo: true });
+          tl.to(el, { scale: 1.06, duration: 0.28, ease: 'power1.out' })
+            .to(el, { scale: 1.0, duration: 0.28, ease: 'power1.in' });
+          playing.set(el, tl);
+        });
+        el.addEventListener('mouseleave', ()=>{
+          const tl = playing.get(el);
+          if(tl){ tl.kill(); playing.delete(el); }
+          gsap.to(el, { scale: 1, duration: 0.2, ease: 'power1.out' });
+        });
+        el.addEventListener('blur', ()=>{
+          const tl = playing.get(el);
+          if(tl){ tl.kill(); playing.delete(el); }
+          gsap.to(el, { scale: 1, duration: 0.2 });
+        });
+      });
+    }
+
+    if(prefersReduced){
+      // minimal fade for essential elements only
+      document.querySelector('nav').style.opacity = 1;
+    } else {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Navbar slide-in (page load)
+      gsap.from('nav', { y: -40, opacity: 0, duration: 0.8, ease: 'back.out(1.6)' });
+
+      // Staggered card entrance in hero
+      gsap.from('.hero-cards .card', {
+        opacity: 0,
+        y: 24,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power2.out',
+        delay: 0.2
+      });
+
+      // Scroll-triggered reveals for at least three sections
+      document.querySelectorAll('.reveal').forEach((el) => {
+        const children = el.children;
+        gsap.from(children, {
+          opacity: 0,
+          y: 120,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 80%',
+            once: true
+          }
+        });
+      });
+    }
+
+    // Attach JS-driven hover pulses to buttons/CTAs
+    attachHoverPulseToButtons();
+  </script>
+</body>
+</html>
